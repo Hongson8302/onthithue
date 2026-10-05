@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1d4ed8">
+<title>Ôn thi Ngành Thuế - Tra cứu câu hỏi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">T</div>
+    <div>
+      <h1>Ôn thi Ngành Thuế</h1>
+      <p>Tra cứu câu hỏi nhanh</p>
+    </div>
+  </div>
+  <button id="themeBtn" class="icon-btn" title="Đổi giao diện">☾</button>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h2>Tra cứu câu hỏi</h2>
+    <p>Nhập vài từ khóa để tìm câu hỏi, đáp án và giải thích.</p>
+
+    <div class="searchbox">
+      <span>⌕</span>
+      <input id="searchInput" type="search"
+        placeholder="Ví dụ: thời hiệu khiếu nại, thuế GTGT, hóa đơn..."
+        autocomplete="off">
+      <button id="clearBtn" class="clear hidden">×</button>
+    </div>
+
+    <div class="filters">
+      <select id="sectionFilter">
+        <option value="">Tất cả phần</option>
+      </select>
+      <select id="answerFilter">
+        <option value="">Tất cả đáp án</option>
+        <option value="A">Đáp án A</option>
+        <option value="B">Đáp án B</option>
+        <option value="C">Đáp án C</option>
+        <option value="D">Đáp án D</option>
+      </select>
+      <label class="check"><input id="warningFilter" type="checkbox"> Chỉ câu cần đối chiếu</label>
+    </div>
+  </section>
+
+  <section class="stats">
+    <span id="resultCount">Đang tải...</span>
+    <button id="randomBtn" class="secondary">🎲 Câu ngẫu nhiên</button>
+  </section>
+
+  <section id="results" class="results"></section>
+  <div id="empty" class="empty hidden">
+    <div class="empty-icon">⌕</div>
+    <h3>Không tìm thấy câu phù hợp</h3>
+    <p>Hãy thử ít từ khóa hơn hoặc bỏ bộ lọc.</p>
+  </div>
+
+  <div id="pager" class="pager hidden">
+    <button id="prevBtn" class="secondary">← Trước</button>
+    <span id="pageInfo"></span>
+    <button id="nextBtn" class="secondary">Sau →</button>
+  </div>
+</main>
+
+<footer>
+  <p>Dữ liệu được tạo từ file câu hỏi đã cung cấp. Có thể thay thế/thêm dữ liệu bằng công cụ cập nhật trong gói website.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
