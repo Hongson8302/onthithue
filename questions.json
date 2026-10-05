@@ -356,13 +356,14 @@
     {
       "id": "1.27",
       "section": "1. Khiếu nại, tố cáo",
-      "question": "7 ngày làm việc",
+      "question": "Thời hạn xử lý ban đầu của thông tin tố cáo",
       "options": {
-        "A": "6 ngày làm việc",
-        "B": "5 ngày làm việc",
-        "C": "8 ngày làm việc"
+        "A": "7 ngày làm việc",
+        "B": "6 ngày làm việc",
+        "C": "5 ngày làm việc",
+        "D": "8 ngày làm việc"
       },
-      "answer": "B",
+      "answer": "A",
       "explanation": "Câu bị lỗi: đề nêu \"7 ngày làm việc\" nhưng các phương án là 5, 6, 8 ngày làm việc. Nên đối chiếu với đáp án/tài liệu gốc của đơn vị.",
       "warning": true
     },
