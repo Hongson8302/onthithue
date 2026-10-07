@@ -59,7 +59,7 @@ function matches(q, terms){
 }
 function card(q, terms){
   let opts="";
-  ["A","B","C","D"].forEach(k=>{
+  ["A","B","C","D","E","F"].forEach(k=>{
     if(q.options[k]) opts+=`<div class="option ${q.answer===k?"correct":""}">
       <span class="letter">${k}.</span>${highlight(q.options[k],terms)}
     </div>`;
@@ -94,6 +94,9 @@ async function init(){
   DATA=await fetch("questions.json",{cache:"no-cache"}).then(r=>r.json());
   all=DATA.questions||[];
   all.forEach(q=>{q._hay=searchable(q);});
+  const letters=[...new Set(all.map(q=>q.answer).filter(Boolean))].sort();
+  const af=$("answerFilter"); while(af.options.length>1) af.remove(1);
+  letters.forEach(l=>{const o=document.createElement("option");o.value=l;o.textContent="Đáp án "+l;af.appendChild(o)});
   const sections=[...new Set(all.map(q=>q.section).filter(Boolean))];
   sections.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;$("sectionFilter").appendChild(o)});
   render();
