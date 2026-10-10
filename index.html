@@ -6,6 +6,18 @@
 <meta name="theme-color" content="#1d4ed8">
 <title>Ôn thi Ngành Thuế - Tra cứu câu hỏi</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.ocr-row{margin-top:10px}
+.ocr-row button{width:100%;padding:12px;font-size:1rem}
+.ocr-box{margin-top:10px;padding:12px;border:1px solid rgba(128,128,128,.4);border-radius:12px}
+.ocr-box textarea{width:100%;min-height:90px;margin:8px 0;padding:8px;font:inherit;box-sizing:border-box;border-radius:8px;border:1px solid rgba(128,128,128,.4);background:transparent;color:inherit}
+.ocr-box .row{display:flex;gap:8px;flex-wrap:wrap}
+.ocr-status{font-size:.9rem;opacity:.85}
+.ocr-banner{margin:10px 0;padding:10px 12px;border-left:4px solid #1d4ed8;border-radius:8px;background:rgba(29,78,216,.08)}
+.ocr-banner button{margin-top:8px}
+.match-score{margin:10px 2px 0;font-weight:600;color:#1d4ed8}
+.hidden{display:none !important}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -32,6 +44,19 @@
       <button id="clearBtn" class="clear hidden">×</button>
     </div>
 
+    <div class="ocr-row">
+      <button id="camBtn" class="secondary" type="button">📷 Chụp / chọn ảnh để tra câu hỏi</button>
+      <input id="camInput" type="file" accept="image/*" hidden>
+    </div>
+    <div id="ocrBox" class="ocr-box hidden">
+      <div id="ocrStatus" class="ocr-status"></div>
+      <textarea id="ocrText" placeholder="Chữ nhận dạng từ ảnh sẽ hiện ở đây, bạn có thể sửa lại"></textarea>
+      <div class="row">
+        <button id="ocrRedo" class="secondary" type="button">🔍 Tra lại</button>
+        <button id="ocrClose" class="secondary" type="button">✕ Đóng</button>
+      </div>
+    </div>
+
     <div class="filters">
       <select id="sectionFilter">
         <option value="">Tất cả phần</option>
@@ -52,6 +77,10 @@
     <button id="randomBtn" class="secondary">🎲 Câu ngẫu nhiên</button>
   </section>
 
+  <div id="ocrBanner" class="ocr-banner hidden">
+    <div id="ocrMsg"></div>
+    <button id="ocrBack" class="secondary" type="button">← Quay lại danh sách</button>
+  </div>
   <section id="results" class="results"></section>
   <div id="empty" class="empty hidden">
     <div class="empty-icon">⌕</div>
