@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="style.css">
 <style>
 .ocr-row{margin-top:10px}
-.ocr-row button{width:100%;padding:12px;font-size:1rem}
+.ocr-btns{display:flex;gap:8px}
+.ocr-row button{flex:1;padding:12px;font-size:1rem}
 .ocr-box{margin-top:10px;padding:12px;border:1px solid rgba(128,128,128,.4);border-radius:12px}
 .ocr-box textarea{width:100%;min-height:90px;margin:8px 0;padding:8px;font:inherit;box-sizing:border-box;border-radius:8px;border:1px solid rgba(128,128,128,.4);background:transparent;color:inherit}
 .ocr-box .row{display:flex;gap:8px;flex-wrap:wrap}
@@ -16,6 +17,13 @@
 .ocr-banner{margin:10px 0;padding:10px 12px;border-left:4px solid #1d4ed8;border-radius:8px;background:rgba(29,78,216,.08)}
 .ocr-banner button{margin-top:8px}
 .match-score{margin:10px 2px 0;font-weight:600;color:#1d4ed8}
+.cam-overlay{position:fixed;inset:0;background:#000;z-index:1000;display:flex;flex-direction:column}
+.cam-overlay video{flex:1;min-height:0;width:100%;object-fit:contain;background:#000}
+.cam-hint{position:absolute;top:10px;left:0;right:0;text-align:center;color:#fff;font-size:.9rem;text-shadow:0 1px 3px #000;padding:0 12px}
+.cam-bar{display:flex;gap:12px;justify-content:center;padding:14px;background:#000}
+.cam-bar button{padding:14px 22px;font-size:1.05rem;border-radius:999px;border:0}
+#camShot{background:#fff;color:#000;font-weight:700}
+#camCancel{background:#333;color:#fff}
 .hidden{display:none !important}
 </style>
 </head>
@@ -45,7 +53,11 @@
     </div>
 
     <div class="ocr-row">
-      <button id="camBtn" class="secondary" type="button">📷 Chụp / chọn ảnh để tra câu hỏi</button>
+      <div class="ocr-btns">
+        <button id="shotBtn" class="secondary" type="button">📷 Chụp ảnh</button>
+        <button id="camBtn" class="secondary" type="button">🖼 Chọn ảnh có sẵn</button>
+      </div>
+      <input id="shotInput" type="file" accept="image/*" capture="environment" hidden>
       <input id="camInput" type="file" accept="image/*" hidden>
     </div>
     <div id="ocrBox" class="ocr-box hidden">
@@ -99,6 +111,15 @@
   <p>Dữ liệu được tạo từ file câu hỏi đã cung cấp. Có thể thay thế/thêm dữ liệu bằng công cụ cập nhật trong gói website.</p>
 </footer>
 
-<script src="app.js"></script>
+<div id="camOverlay" class="cam-overlay hidden">
+  <div class="cam-hint">Đưa câu hỏi vào khung hình, giữ chắc tay rồi bấm Chụp</div>
+  <video id="camVideo" playsinline autoplay muted></video>
+  <div class="cam-bar">
+    <button id="camShot" type="button">⬤ Chụp</button>
+    <button id="camCancel" type="button">✕ Đóng</button>
+  </div>
+</div>
+
+<script src="app.js?v=4"></script>
 </body>
 </html>
