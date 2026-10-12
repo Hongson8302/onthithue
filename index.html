@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1d4ed8">
+<title>Ôn thi Ngành Thuế - Tra cứu câu hỏi</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.ocr-row{margin-top:10px}
+.ocr-btns{display:flex;gap:8px}
+.ocr-row button{flex:1;padding:12px;font-size:1rem}
+.ocr-box{margin-top:10px;padding:12px;border:1px solid rgba(128,128,128,.4);border-radius:12px}
+.ocr-box textarea{width:100%;min-height:90px;margin:8px 0;padding:8px;font:inherit;box-sizing:border-box;border-radius:8px;border:1px solid rgba(128,128,128,.4);background:transparent;color:inherit}
+.ocr-box .row{display:flex;gap:8px;flex-wrap:wrap}
+.ocr-status{font-size:.9rem;opacity:.85}
+.ocr-banner{margin:10px 0;padding:10px 12px;border-left:4px solid #1d4ed8;border-radius:8px;background:rgba(29,78,216,.08)}
+.ocr-banner button{margin-top:8px}
+.match-score{margin:10px 2px 0;font-weight:600;color:#1d4ed8}
+.cam-overlay{position:fixed;inset:0;background:#000;z-index:1000;display:flex;flex-direction:column}
+.cam-overlay video{flex:1;min-height:0;width:100%;object-fit:contain;background:#000}
+.cam-hint{position:absolute;top:10px;left:0;right:0;text-align:center;color:#fff;font-size:.9rem;text-shadow:0 1px 3px #000;padding:0 12px}
+.cam-bar{display:flex;gap:12px;justify-content:center;padding:14px;background:#000}
+.cam-bar button{padding:14px 22px;font-size:1.05rem;border-radius:999px;border:0}
+#camShot{background:#fff;color:#000;font-weight:700}
+#camCancel{background:#333;color:#fff}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">T</div>
+    <div>
+      <h1>Ôn thi Ngành Thuế</h1>
+      <p>Tra cứu câu hỏi nhanh</p>
+    </div>
+  </div>
+  <button id="themeBtn" class="icon-btn" title="Đổi giao diện">☾</button>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h2>Tra cứu câu hỏi</h2>
+    <p>Nhập vài từ khóa để tìm câu hỏi, đáp án và giải thích.</p>
+
+    <div class="searchbox">
+      <span>⌕</span>
+      <input id="searchInput" type="search"
+        placeholder="Ví dụ: thời hiệu khiếu nại, thuế GTGT, hóa đơn..."
+        autocomplete="off">
+      <button id="clearBtn" class="clear hidden">×</button>
+    </div>
+
+    <div class="ocr-row">
+      <div class="ocr-btns">
+        <button id="shotBtn" class="secondary" type="button">📷 Chụp ảnh</button>
+        <button id="camBtn" class="secondary" type="button">🖼 Chọn ảnh có sẵn</button>
+      </div>
+      <input id="shotInput" type="file" accept="image/*" capture="environment" hidden>
+      <input id="camInput" type="file" accept="image/*" hidden>
+    </div>
+    <div id="ocrBox" class="ocr-box hidden">
+      <div id="ocrStatus" class="ocr-status"></div>
+      <textarea id="ocrText" placeholder="Chữ nhận dạng từ ảnh sẽ hiện ở đây, bạn có thể sửa lại"></textarea>
+      <div class="row">
+        <button id="ocrRedo" class="secondary" type="button">🔍 Tra lại</button>
+        <button id="ocrClose" class="secondary" type="button">✕ Đóng</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <select id="sectionFilter">
+        <option value="">Tất cả phần</option>
+      </select>
+      <select id="answerFilter">
+        <option value="">Tất cả đáp án</option>
+        <option value="A">Đáp án A</option>
+        <option value="B">Đáp án B</option>
+        <option value="C">Đáp án C</option>
+        <option value="D">Đáp án D</option>
+      </select>
+      <label class="check"><input id="warningFilter" type="checkbox"> Chỉ câu cần đối chiếu</label>
+    </div>
+  </section>
+
+  <section class="stats">
+    <span id="resultCount">Đang tải...</span>
+    <button id="randomBtn" class="secondary">🎲 Câu ngẫu nhiên</button>
+  </section>
+
+  <div id="ocrBanner" class="ocr-banner hidden">
+    <div id="ocrMsg"></div>
+    <button id="ocrBack" class="secondary" type="button">← Quay lại danh sách</button>
+  </div>
+  <section id="results" class="results"></section>
+  <div id="empty" class="empty hidden">
+    <div class="empty-icon">⌕</div>
+    <h3>Không tìm thấy câu phù hợp</h3>
+    <p>Hãy thử ít từ khóa hơn hoặc bỏ bộ lọc.</p>
+  </div>
+
+  <div id="pager" class="pager hidden">
+    <button id="prevBtn" class="secondary">← Trước</button>
+    <span id="pageInfo"></span>
+    <button id="nextBtn" class="secondary">Sau →</button>
+  </div>
+</main>
+
+<footer>
+  <p>Dữ liệu được tạo từ file câu hỏi đã cung cấp. Có thể thay thế/thêm dữ liệu bằng công cụ cập nhật trong gói website.</p>
+</footer>
+
+<div id="camOverlay" class="cam-overlay hidden">
+  <div class="cam-hint">Đưa câu hỏi vào khung hình, giữ chắc tay rồi bấm Chụp</div>
+  <video id="camVideo" playsinline autoplay muted></video>
+  <div class="cam-bar">
+    <button id="camShot" type="button">⬤ Chụp</button>
+    <button id="camCancel" type="button">✕ Đóng</button>
+  </div>
+</div>
+
+<script src="app.js?v=4"></script>
+</body>
+</html>
